@@ -1,0 +1,17 @@
+HELP TAKEN FROM ChatGPT 3.5
+
+1) Issue Addressed by GPT
+
+    "Changes made:
+
+        In the handle function, I replaced client_list(client) with client_list.index(client) to find the index of the client socket in the list.
+        After removing a client from the client_list, I added client.close() to properly close the client socket.
+        Renamed the recieve function to receive.
+
+    These changes should fix the issue you were facing. Your code now correctly receives data from individual client sockets and handles client disconnects."
+
+2) Reusing of sockets after server dies
+
+    By adding the line server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1), you're telling the socket to allow address reuse. This will prevent the "Address already in use" error that you might encounter when restarting the server quickly after it's been stopped.
+
+    With this change, you should be able to restart your server process without having to wait for the TIME_WAIT state to clear before the socket can be reused. Just remember that reusing the socket immediately might potentially lead to some minor issues if there are lingering connections or data from the previous server instance.
